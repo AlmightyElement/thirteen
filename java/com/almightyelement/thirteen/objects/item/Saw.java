@@ -28,37 +28,34 @@ public class Saw extends ItemBase implements IHasModel{
 	public Saw(String name){
 		super(name);
 	}
-	private EnumActionResult succes = EnumActionResult.PASS;
-	private EnumActionResult failure = EnumActionResult.FAIL;
+	
 	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitx, float hity, float hitz)
 	{
 		
-		Item item = playerIn.getHeldItem(hand).getItem();
-		Item saw = ModItems.SAW;
-		
+		ItemStack item = playerIn.getHeldItem(hand);
 		IBlockState block = Blocks.LOG.getDefaultState();
+		Block clickedBlock = worldIn.getBlockState(pos).getBlock();
 		
-
-		if (item == saw)
-		{
-			//if (worldIn.getBlockState(pos).getBlock() == block){
+			if (clickedBlock == block)
+			{
 				
 				worldIn.setBlockState(pos, ModBlocks.STRIPPED_LOG.getDefaultState());
                 System.out.println("The system succeeded.");
-                return succes;
+                return EnumActionResult.PASS;
                 
-		}	
+			}	
 		
-		else
-		{
-			System.out.println("The system failed.");
-			return failure;
+			else
+			{
 				
+			System.out.println("The system failed.");
+			return EnumActionResult.FAIL;
+			
+			}
+			
 		}
-		
-	}
 	
 	@Override
 	public void registerModels() 
